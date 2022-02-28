@@ -1,0 +1,22 @@
+<div class="row col-12" *ngIf="!isSearching">
+    <span class="page-title display-2 lh-1 c-white">Find movie & more.</span>
+    <span class="page-title display-2 lh-1 c-white">Explore now.</span>
+</div>
+
+<div class="col-xl-7 col-md-10 py-3">
+    <div class="input-group rounded b-gray">
+        <i class="ms-2 fas fa-search d-flex align-self-center me-2 c-gray"></i>
+        <input type="search" class="form-control rounded" placeholder="Start typing to search..." #movieSearchInput (search)="onSearchCustomer($event)" (keyup)="onSearchCustomer($event)" />
+        <button type="button" class="btn btn-primary" *ngIf="!isSearching">Search</button>
+    </div>
+</div>
+
+<div class="row col-12 py-3">
+    <span class="page-title display-6 c-white">{{isSearching ? 'Search results' : 'Explore movies'}}</span>
+</div>
+
+<mat-button-toggle-group #widgetsContent class="gp-btn custom-slider-btn" *ngIf="!isSearching">
+    <mat-button-toggle class="me-2" *ngFor="let tab of tabs; let i = index" [routerLink]="tab.path" routerLinkActive
+        #rla="routerLinkActive" [ngClass]="rla.isActive ? 'b-blue c-white' : 'b-gray c-gray'">{{tab.label}}
+    </mat-button-toggle>
+</mat-button-toggle-group>

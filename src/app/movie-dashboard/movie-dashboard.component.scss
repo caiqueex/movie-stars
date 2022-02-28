@@ -1,0 +1,40 @@
+.form-control {
+    background-color: #262626;
+    border: none;
+    color: #707070;
+}
+
+.rounded {
+    border-radius: 5px !important;
+}
+
+input[type=search] {
+    padding-left: 0px;
+    font-size: 12px;
+}
+
+.btn-primary {
+    z-index: 9;
+}
+
+.btn-ctm-group {
+    font-size: 12px;
+    border: none;
+    box-shadow: none;
+}
+
+:host .mat-button-toggle {
+    border-radius: 25px !important;
+    height: 25px !important;
+    align-items: center;
+}
+
+::ng-deep .gp-btn .mat-button-toggle-label-content {
+    line-height: 25px !important; 
+}
+
+.custom-slider-btn {
+    display: flex;
+    overflow: scroll;    
+    scroll-behavior: smooth;
+}

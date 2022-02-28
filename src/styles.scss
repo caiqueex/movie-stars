@@ -1,0 +1,67 @@
+
+@use '@angular/material' as mat;
+@include mat.core();
+
+$movie-stars-primary: mat.define-palette(mat.$indigo-palette);
+$movie-stars-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+$movie-stars-warn: mat.define-palette(mat.$red-palette);
+
+$movie-stars-theme: mat.define-light-theme((
+  color: (
+    primary: $movie-stars-primary,
+    accent: $movie-stars-accent,
+    warn: $movie-stars-warn,
+  )
+));
+
+@include mat.all-component-themes($movie-stars-theme);
+
+$theme-colors: (
+  "primary": #005FF8,
+  "danger": #ff4136
+);
+
+@font-face {
+    font-family: "Bebas Neue";
+    src: local("Bebas Neue"), url(./assets/fonts/BebasNeue-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: local("Poppins"), url(./assets/fonts/Poppins-Regular.ttf) format("truetype");
+}
+
+html, body {
+    background-color: #0A0A09;
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+}
+* {
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+}
+
+.page-title {
+    font-family: "Bebas Neue", Arial, Helvetica, sans-serif;
+}
+
+.c-white {
+    color: white;
+}
+
+.c-gray {
+    color: #707070;
+}
+
+.b-gray {
+    background-color: #262626;
+}
+
+.b-blue {
+    background-color: #0d6efd;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
