@@ -1,1 +1,25 @@
-<p>movie-list works!</p>
+<span hidden>
+    {{movies.length}}
+</span>
+
+<div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
+    class="movies-container mt-3" *ngIf="movies && movies.length; else emptyList">
+    <div *ngFor="let movie of movies" class="item m-sm-3 m-md-3 ms-0 row col-12 my-2"
+        [routerLink]="['/movie', movie.id, 'details']">
+        <div class="movie-bg-container col-2">
+            <img class="w-100 img-ctm" [src]="movie.poster_path">
+        </div>
+
+        <div class="rating-container mt-2 p-0 p-abs-container">
+            <i class="fas fa-star d-flex align-self-center me-2 c-gray"></i>
+            <span>{{(movie.vote_average * 10).toFixed(0) + "%"}}</span>
+        </div>
+
+        <div class="row col-10 col-lg-12 ms-2 ms-md-0">
+            <span class="row ms-0 c-white fs-7 my-2">{{movie.title}}</span>
+            <span class="row ms-0 c-gray fs-8">{{movie.release_date | date: 'dd MMM yyyy'}}</span>
+        </div>
+    </div>
+</div>
+
+<ng-template #emptyList>other content here...</ng-template>

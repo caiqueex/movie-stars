@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, ElementRef, Inject, Injectable, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, map, Observable, Subject, Subscription } from 'rxjs';
+import { catchError, map, Observable, Subject, Subscription, tap } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MoviesPagedListResponse } from 'src/model/moviesPagedListResponse';
@@ -35,9 +35,41 @@ export class MovieDashboardService implements OnDestroy {
     return { params };
   }
 
+  public formatMovies(items) {
+    const imgUrl = environment.IMG_PATH;
+    return items.map(item => {
+      if (item) {
+        item.poster_path = item.poster_path
+          ? `${imgUrl}${item.poster_path}`
+          : './assets/images/no-image.png';
+        item.backdrop_path = item.backdrop_path
+          ? `${imgUrl}${item.backdrop_path}`
+          : './assets/images/no-image.png';
+        item.overview = item.overview.substr(0, 100) + '...';
+        return item;
+      }
+    });
+  }
+
   public getMovie (type: 'popular' | 'now_playing' | 'top_rated'): Observable<MoviesPagedListResponse> {
+
+    localStorage.setItem('previous_url', `${this.HOME_PATH}movie/${type}`);
+    localStorage.setItem('previous_parameters', `{"page": 1}`);
+    
     return this.httpClient
-      .get(`${this.HOME_PATH}movie/${type}`, this.formatParameters({}))
+    .get<MoviesPagedListResponse>(`${this.HOME_PATH}movie/${type}`, this.formatParameters({}))
+    .pipe(
+        takeUntil(this.destroy$)
+        );
+    }
+    
+    public searchMovie (term: string, page?: number): Observable<Array<Movie>> {
+    
+    localStorage.setItem('previous_url', `${this.HOME_PATH}search/movie`);
+    localStorage.setItem('previous_parameters', `{"query": "${term}", "page": 1}`);
+
+    return this.httpClient
+      .get<MoviesPagedListResponse>(`${this.HOME_PATH}search/movie`, this.formatParameters({query: term, page: page}))
       .pipe(
         takeUntil(this.destroy$),
         pluck('results'),
@@ -45,12 +77,16 @@ export class MovieDashboardService implements OnDestroy {
       );
   }
 
-  public searchMovie (term: string): Observable<MoviesPagedListResponse> {
+  public nextPage (): Observable<Array<Movie>> {
+
+    let previous_parameters: any = JSON.parse(localStorage.getItem('previous_parameters'))
+
     return this.httpClient
-      .get(`${this.HOME_PATH}search/movie`, this.formatParameters({query: term}))
+      .get<MoviesPagedListResponse>(localStorage.getItem('previous_url'), this.formatParameters(previous_parameters ? {query: previous_parameters.query, page: previous_parameters.page} : {}))
       .pipe(
         takeUntil(this.destroy$),
         pluck('results'),
+        tap((a) => localStorage.setItem('previous_parameters', `{"query": "${previous_parameters ? previous_parameters.query : null}", "page": ${previous_parameters.page + 1}}`))
         // catchError(this.handleError)
       );
   }

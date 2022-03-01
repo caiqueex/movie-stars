@@ -11,7 +11,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MovieDashboardService } from './movie-dashboard/movie-dashboard.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,12 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonToggleModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule,
+    LoadingBarHttpClientModule,
+    InfiniteScrollModule,
+    LoadingBarRouterModule,
+    LoadingBarModule
   ],
   providers: [MovieDashboardService, HttpClientModule],
   bootstrap: [AppComponent]

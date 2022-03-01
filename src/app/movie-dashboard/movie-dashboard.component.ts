@@ -1,10 +1,12 @@
 import {ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, of, Subscription } from 'rxjs';
+import { Movie } from 'src/model/movie';
+import { MoviesPagedListResponse } from 'src/model/moviesPagedListResponse';
 import { MovieDashboardService } from './movie-dashboard.service';
 
 @Component({
-  selector: 'app-movie-dashboard',
+  selector: 'movie-dashboard',
   templateUrl: './movie-dashboard.component.html',
   styleUrls: ['./movie-dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,8 +16,9 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
   @ViewChild('widgetsContent') widgetsContent: ElementRef;
   @ViewChild('movieSearchInput', { static: true }) movieSearchInput: ElementRef;
   private subsc: Subscription = new Subscription();
-  public apiResponse: any;
+  public movies: Array<Movie>;
   public isSearching: boolean = false;
+  public page: number = 1;
   
   public tabs = [
     {
@@ -42,13 +45,22 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
 
     switch (this.router.url) {
       case '/movie/most-popular':
-        this.movieDashboardService.getMovie('popular').subscribe((a) => console.log(a));
+        this.movieDashboardService.getMovie('popular').subscribe((res: MoviesPagedListResponse) => {
+          this.movies = this.movieDashboardService.formatMovies(res.results);
+          this.page = res.page;
+        });
         break;
       case '/movie/now-playing':
-        this.movieDashboardService.getMovie('now_playing').subscribe((a) => console.log(a));
+        this.movieDashboardService.getMovie('now_playing').subscribe((res: MoviesPagedListResponse) => {
+          this.movies = this.movieDashboardService.formatMovies(res.results);
+          this.page = res.page;
+        });
         break;
       case '/movie/top-rated':
-        this.movieDashboardService.getMovie('top_rated').subscribe((a) => console.log(a));
+        this.movieDashboardService.getMovie('top_rated').subscribe((res: MoviesPagedListResponse) => {
+          this.movies = this.movieDashboardService.formatMovies(res.results);
+          this.page = res.page;
+        });
         break;
       default:
         break;
@@ -80,7 +92,7 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/movie/search'], { queryParams: { query: text }, preserveFragment: true  });
 
       this.getSearch(text).subscribe((res) => {
-        this.apiResponse = res;
+        this.movies = this.movieDashboardService.formatMovies(res);
       }, (err) => {
         this.isSearching = false;
         console.log('error', err);
@@ -101,11 +113,29 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
     return this.movieDashboardService.searchMovie(term);
   }
 
-  onSearchCustomer(event: any) {
+  public clearSearchInput(event: any) {
     if(!event.target.value) {
       this.router.navigate(['/movie/most-popular']);
       this.isSearching = !!this.activatedRoute.snapshot.queryParams['query']
     }
+ }
+
+ public search() {
+    if(this.movieSearchInput.nativeElement.value) {
+      this.router.navigate(['/movie/search'], { queryParams: { query: this.movieSearchInput.nativeElement.value }, preserveFragment: true  });
+    }
+ }
+
+ public nextPage() {
+  // this.movieDashboardService.searchMovie('term', this.page + 1).subscribe((m: Movie[]) => {
+  //   this.movies.push(...this.movieDashboardService.formatMovies(m))
+  // });
+  // this.page = this.page + 1;
+
+  this.movieDashboardService.nextPage().subscribe((m: Movie[]) => {
+    this.movies.push(...this.movieDashboardService.formatMovies(m));
+  });
+
  }
 
   scrollLeft(){

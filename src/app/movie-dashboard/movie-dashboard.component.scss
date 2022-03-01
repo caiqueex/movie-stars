@@ -38,3 +38,8 @@ input[type=search] {
     overflow: scroll;    
     scroll-behavior: smooth;
 }
+
+.mat-button-toggle-group::-webkit-scrollbar {
+    width: 0px;/* remove scrollbar space */
+    background: transparent;/* make scrollbar invisible */
+}
