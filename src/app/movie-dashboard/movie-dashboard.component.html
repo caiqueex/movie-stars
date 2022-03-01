@@ -8,7 +8,7 @@
         <i class="ms-2 fas fa-search d-flex align-self-center me-2 c-gray"></i>
         <input type="search" class="form-control rounded" placeholder="Start typing to search..." #movieSearchInput
             (search)="clearSearchInput($event)" (keyup)="clearSearchInput($event)" />
-        <button type="button" class="btn btn-primary" *ngIf="!isSearching" (click)="search()">Search</button>
+        <button type="button" class="btn btn-primary" (click)="search()">Search</button>
     </div>
 </div>
 

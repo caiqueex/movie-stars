@@ -4,6 +4,7 @@ import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable,
 import { Movie } from 'src/model/movie';
 import { MoviesPagedListResponse } from 'src/model/moviesPagedListResponse';
 import { MovieDashboardService } from './movie-dashboard.service';
+import { formatMovies } from 'src/helpers/formatters'
 
 @Component({
   selector: 'movie-dashboard',
@@ -46,19 +47,19 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
     switch (this.router.url) {
       case '/movie/most-popular':
         this.movieDashboardService.getMovie('popular').subscribe((res: MoviesPagedListResponse) => {
-          this.movies = this.movieDashboardService.formatMovies(res.results);
+          this.movies = formatMovies(res.results);
           this.page = res.page;
         });
         break;
       case '/movie/now-playing':
         this.movieDashboardService.getMovie('now_playing').subscribe((res: MoviesPagedListResponse) => {
-          this.movies = this.movieDashboardService.formatMovies(res.results);
+          this.movies = formatMovies(res.results);
           this.page = res.page;
         });
         break;
       case '/movie/top-rated':
         this.movieDashboardService.getMovie('top_rated').subscribe((res: MoviesPagedListResponse) => {
-          this.movies = this.movieDashboardService.formatMovies(res.results);
+          this.movies = formatMovies(res.results);
           this.page = res.page;
         });
         break;
@@ -92,7 +93,7 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/movie/search'], { queryParams: { query: text }, preserveFragment: true  });
 
       this.getSearch(text).subscribe((res) => {
-        this.movies = this.movieDashboardService.formatMovies(res);
+        this.movies = formatMovies(res);
       }, (err) => {
         this.isSearching = false;
         console.log('error', err);
@@ -123,19 +124,21 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
  public search() {
     if(this.movieSearchInput.nativeElement.value) {
       this.router.navigate(['/movie/search'], { queryParams: { query: this.movieSearchInput.nativeElement.value }, preserveFragment: true  });
+
+      this.getSearch(this.movieSearchInput.nativeElement.value).subscribe((res) => {
+        this.movies = formatMovies(res);
+      }, (err) => {
+        this.isSearching = false;
+        console.log('error', err);
+      });
+
     }
  }
 
  public nextPage() {
-  // this.movieDashboardService.searchMovie('term', this.page + 1).subscribe((m: Movie[]) => {
-  //   this.movies.push(...this.movieDashboardService.formatMovies(m))
-  // });
-  // this.page = this.page + 1;
-
   this.movieDashboardService.nextPage().subscribe((m: Movie[]) => {
-    this.movies.push(...this.movieDashboardService.formatMovies(m));
+    this.movies.push(...formatMovies(m));
   });
-
  }
 
   scrollLeft(){

@@ -10,16 +10,20 @@
             <img class="w-100 img-ctm" [src]="movie.poster_path">
         </div>
 
-        <div class="rating-container mt-2 p-0 p-abs-container">
+        <div class="rating-container mt-sm-2 p-0 p-abs-container">
             <i class="fas fa-star d-flex align-self-center me-2 c-gray"></i>
             <span>{{(movie.vote_average * 10).toFixed(0) + "%"}}</span>
         </div>
 
-        <div class="row col-10 col-lg-12 ms-2 ms-md-0">
-            <span class="row ms-0 c-white fs-7 my-2">{{movie.title}}</span>
+        <div class="row col-10 col-lg-12 ms-2 ms-md-0 row-mb">
+            <span class="row ms-0 c-white fs-7 my-sm-2">{{movie.title}}</span>
             <span class="row ms-0 c-gray fs-8">{{movie.release_date | date: 'dd MMM yyyy'}}</span>
         </div>
     </div>
 </div>
 
-<ng-template #emptyList>other content here...</ng-template>
+<ng-template #emptyList>
+    <div class="col d-flex align-items-center justify-content-center">
+        <img class="w-30-c" src="./assets/images/no-results-found.png">
+    </div>
+</ng-template>

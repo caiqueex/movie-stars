@@ -35,6 +35,7 @@ $theme-colors: (
 html, body {
     background-color: #0A0A09;
     font-family: "Poppins", Arial, Helvetica, sans-serif;
+    height: 100%;
 }
 
 * {
@@ -51,6 +52,10 @@ html, body {
 .page-title {
     font-family: "Bebas Neue", Arial, Helvetica, sans-serif;
 }
+
+.w-30-c {
+    width: 300px;
+} 
 
 .c-white {
     color: white;
@@ -79,4 +84,12 @@ html, body {
 .form-control:focus {
     box-shadow: none;
 }
-html, body { height: 100%; }
+
+.btn-primary:focus {
+    box-shadow: unset !important;
+}
+
+.img-ctm {
+    border: solid 1px #ffffff2e;
+    border-radius: 4px;
+}

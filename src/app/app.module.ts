@@ -16,6 +16,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MovieDetailsService } from './movie-details/movie-details.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,11 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     LoadingBarRouterModule,
     LoadingBarModule
   ],
-  providers: [MovieDashboardService, HttpClientModule],
+  providers: [
+    MovieDashboardService,
+    HttpClientModule,
+    MovieDetailsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

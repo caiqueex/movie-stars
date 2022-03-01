@@ -1,1 +1,10 @@
-<p>movie-details works!</p>
+<div class="p-5 row col-12" *ngIf="movieDetails">
+    <div class="col-md-3 col-12 justify-content-center align-items-center d-flex">
+        <img class="w-75 img-ctm" [src]="movieDetails.poster_path">
+    </div>
+    <div class="col-md-9 col-12 justify-content-center align-self-center mt-lg-0 mt-4">
+        <span class="page-title display-6 c-white row">{{movieDetails.title}}</span>
+        <span class="c-gray row">{{movieDetails.release_date | date: 'dd/MM/YYYY'}} (PT) • {{formatGenresByComma(movieDetails.genres)}}</span>
+        <span class="c-white row mt-lg-5 pt-lg-5 mt-3 lt-3">{{movieDetails.overview}}</span>
+    </div>
+</div>
