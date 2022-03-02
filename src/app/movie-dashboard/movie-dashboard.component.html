@@ -3,7 +3,7 @@
     <span class="page-title display-2 lh-1 c-white">Explore now.</span>
 </div>
 
-<div class="my-2">
+<div class="my-2" *ngIf="!isSearching">
     <span class="c-white fs-6 page-title">Movies language:</span>
     <img class="flags mx-2" (click)="setLanguage('en-US')" src="assets/images/estados-unidos.png">
     <img class="flags mx-2" (click)="setLanguage('pt-BR')" src="assets/images/brasil.png">

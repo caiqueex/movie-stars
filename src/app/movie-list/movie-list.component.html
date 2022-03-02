@@ -16,7 +16,7 @@
         </div>
 
         <div class="row col-10 col-lg-12 ms-2 ms-md-0 row-mb">
-            <span class="row ms-0 c-white fs-7 my-sm-2 w-250">{{movie.title}}</span>
+            <span class="row ms-0 c-white fs-7 my-sm-2 w-200-trunc" [matTooltip]="movie.title">{{movie.title}}</span>
             <span class="row ms-0 c-gray fs-8">{{movie.release_date | date: 'dd MMM yyyy'}}</span>
         </div>
     </div>
