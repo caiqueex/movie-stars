@@ -1,10 +1,21 @@
-<div class="p-5 row col-12" *ngIf="movieDetails">
+<div class="p-5 row col-12 cover-img h-50 m-0" *ngIf="movieDetails"
+    [style.background-image]="'url(' + movieDetails.backdrop_path + ')'">
+</div>
+
+<div class="p-5 row col-12 position-absolute movie-content" *ngIf="movieDetails">
     <div class="col-md-3 col-12 justify-content-center align-items-center d-flex">
         <img class="w-75 img-ctm" [src]="movieDetails.poster_path">
     </div>
     <div class="col-md-9 col-12 justify-content-center align-self-center mt-lg-0 mt-4">
         <span class="page-title display-6 c-white row">{{movieDetails.title}}</span>
-        <span class="c-gray row">{{movieDetails.release_date | date: 'dd/MM/YYYY'}} (PT) • {{formatGenresByComma(movieDetails.genres)}}</span>
+        <span class="c-white row fs-10">{{movieDetails.release_date | date: 'dd/MM/YYYY'}} (PT) •
+            {{formatGenresByComma(movieDetails.genres)}} • {{formatRuntime(movieDetails.runtime)}}</span>
+
+        <div (click)="openDialog()" *ngIf="movieVideos && movieVideos.length" class="mt-2">
+            <i class="fas fa-play c-white row"></i>
+            <span class="c-white mt-2 ml-2 ml-20px">Trailer</span>
+        </div>
+
         <span class="c-white row mt-lg-5 pt-lg-5 mt-3 lt-3">{{movieDetails.overview}}</span>
     </div>
 </div>

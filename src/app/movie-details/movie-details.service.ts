@@ -1,11 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { MoviesPagedListResponse } from 'src/model/moviesPagedListResponse';
 import { formatParameters } from 'src/helpers/formatters'
 import { MovieDetail } from 'src/model/movieDetail';
+import { MovieVideo } from 'src/model/movieVideo';
+import { MovieVideosPagedListResponse } from 'src/model/movieVideosPagedListResponse';
 
 @Injectable()
 export class MovieDetailsService implements OnDestroy {
@@ -27,6 +28,15 @@ export class MovieDetailsService implements OnDestroy {
             .get<MovieDetail>(`${this.HOME_PATH}movie/${id}`, formatParameters({}))
             .pipe(
                 takeUntil(this.destroy$)
+            );
+    }
+
+    public getMovieVideo(id: number): Observable<Array<MovieVideo>> {
+        return this.httpClient
+            .get<MovieVideosPagedListResponse>(`${this.HOME_PATH}movie/${id}/videos`, formatParameters({}))
+            .pipe(
+                takeUntil(this.destroy$),
+                pluck('results'),
             );
     }
 

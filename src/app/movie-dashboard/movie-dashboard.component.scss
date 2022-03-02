@@ -43,3 +43,16 @@ input[type=search] {
     width: 0px;/* remove scrollbar space */
     background: transparent;/* make scrollbar invisible */
 }
+
+.flags {
+    width: 20px;
+}
+
+::ng-deep {
+    .mat-form-field-type-mat-select .mat-form-field-label, .mat-select-value {
+        color: white;
+      }
+      .mat-form-field-type-mat-select .mat-form-field-flex {
+          background-color: #262626;
+      }
+}

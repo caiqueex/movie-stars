@@ -34,7 +34,15 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
       label: 'Top Rated',
       path: '/movie/top-rated',
     },
-  ]
+  ];
+
+  public language = [
+    {value: 'pt-BR', viewValue: 'Portuguese'},
+    {value: 'en-US', viewValue: 'English'},
+    {value: 'es-ES', viewValue: 'Spanish'},
+  ];
+
+  public selectedLanguage = localStorage.getItem('language') || this.language[0].value;
 
   constructor(
     private router: Router,
@@ -139,6 +147,12 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
   this.movieDashboardService.nextPage().subscribe((m: Movie[]) => {
     this.movies.push(...formatMovies(m));
   });
+ }
+
+ public setLanguage(language: string) {
+  localStorage.setItem('language', language);
+  window.location.reload();
+  this.selectedLanguage = language;
  }
 
   scrollLeft(){

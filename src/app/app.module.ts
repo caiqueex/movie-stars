@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MovieDashboardComponent } from './movie-dashboard/movie-dashboard.component';
@@ -17,6 +16,10 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MovieDetailsService } from './movie-details/movie-details.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TrailerModalComponent } from './trailer-modal/trailer-modal.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { MovieDetailsService } from './movie-details/movie-details.service';
     MovieDetailsComponent,
     PageNotFoundComponent,
     MovieListComponent,
+    TrailerModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,10 @@ import { MovieDetailsService } from './movie-details/movie-details.service';
     LoadingBarHttpClientModule,
     InfiniteScrollModule,
     LoadingBarRouterModule,
-    LoadingBarModule
+    LoadingBarModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [
     MovieDashboardService,

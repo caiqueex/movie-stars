@@ -52,7 +52,7 @@ export class MovieDashboardService implements OnDestroy {
         let previous_parameters: any = JSON.parse(localStorage.getItem('previous_parameters'))
 
         return this.httpClient
-            .get<MoviesPagedListResponse>(localStorage.getItem('previous_url'), formatParameters(previous_parameters ? { query: previous_parameters.query, page: previous_parameters.page } : {}))
+            .get<MoviesPagedListResponse>(localStorage.getItem('previous_url'), formatParameters(previous_parameters ? { query: previous_parameters.query, page: previous_parameters.page + 1 } : {}))
             .pipe(
                 takeUntil(this.destroy$),
                 pluck('results'),
