@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, of, pluck, Subject, Subscription, takeUntil } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { Movie } from 'src/model/movie';
-import { MoviesPagedListResponse } from 'src/model/moviesPagedListResponse';
 import { MovieDashboardService } from './movie-dashboard.service';
 import { formatMovies } from 'src/helpers/formatters'
 
@@ -16,6 +15,7 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild('widgetsContent') widgetsContent: ElementRef;
   @ViewChild('movieSearchInput', { static: true }) movieSearchInput: ElementRef;
+
   private subsc: Subscription = new Subscription();
   private destroy$ = new Subject<void>();
   public movies: Array<Movie>;
@@ -53,36 +53,6 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    switch (this.router.url) {
-      case '/movie/most-popular':
-        this.movieDashboardService.getMovie('popular')
-          .pipe(
-            pluck('results'),
-            map((mv: Movie[]) => formatMovies(mv)),
-            takeUntil(this.destroy$),
-          ).subscribe((res) => this.movies = res);
-        break;
-      case '/movie/now-playing':
-        this.movieDashboardService.getMovie('now_playing')
-          .pipe(
-            pluck('results'),
-            map((mv: Movie[]) => formatMovies(mv)),
-            takeUntil(this.destroy$),
-          ).subscribe((res) => this.movies = res);
-        break;
-      case '/movie/top-rated':
-        this.movieDashboardService.getMovie('top_rated')
-          .pipe(
-            pluck('results'),
-            map((mv: Movie[]) => formatMovies(mv)),
-            takeUntil(this.destroy$),
-          ).subscribe((res) => this.movies = res);
-        break;
-      default:
-        break;
-    }
-
     // to preserve query term and get new search when we visit the platform directly accessing the route 'movie/search[...]'
     this.activatedRoute.paramMap.subscribe(_ => {
       if (this.activatedRoute.snapshot.queryParams['query']) {
@@ -101,16 +71,8 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
       debounceTime(250), //The search input should not trigger any call when the same word is written within the interval of 250 milliseconds
       distinctUntilChanged()
     ).subscribe((text: string) => {
-
-      this.router.navigate(['/movie/search'], { queryParams: { query: text }, preserveFragment: true });
-
-      this.getSearch(text).subscribe((res) => {
-        this.movies = formatMovies(res);
-      }, (err) => {
-        this.isSearching = false;
-        console.log('error', err);
-      });
-
+      this.isSearching = true;
+      this.router.navigate(['/movie/search'], { queryParams: { query: text }});
     });
 
   }
@@ -131,7 +93,7 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
   public clearSearchInput(event: any) {
     if (!event.target.value) {
       this.router.navigate(['/movie/most-popular']);
-      this.isSearching = !!this.activatedRoute.snapshot.queryParams['query']
+      this.isSearching = false;
     }
   }
 
@@ -149,16 +111,15 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  public nextPage() {
-    this.movieDashboardService.nextPage().subscribe((m: Movie[]) => {
-      this.movies.push(...formatMovies(m));
-    });
-  }
-
   public setLanguage(language: string) {
     localStorage.setItem('language', language);
     window.location.reload();
     this.selectedLanguage = language;
+  }
+
+  public checkLanguage(flagReceived) {
+    let lang = localStorage.getItem('language');
+    return lang === flagReceived ? 'flag-selected' : ''; 
   }
 
   scrollLeft() {

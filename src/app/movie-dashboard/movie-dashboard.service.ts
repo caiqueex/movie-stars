@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -34,7 +34,7 @@ export class MovieDashboardService implements OnDestroy {
             );
     }
 
-    public searchMovie(term: string, page?: number): Observable<Array<Movie>> {
+    public searchMovie(term: string, page?: number): Observable<MoviesPagedListResponse> {
 
         localStorage.setItem('previous_url', `${this.HOME_PATH}search/movie`);
         localStorage.setItem('previous_parameters', `{"query": "${term}", "page": 1}`);
@@ -42,8 +42,7 @@ export class MovieDashboardService implements OnDestroy {
         return this.httpClient
             .get<MoviesPagedListResponse>(`${this.HOME_PATH}search/movie`, formatParameters({ query: term, page: page }))
             .pipe(
-                takeUntil(this.destroy$),
-                pluck('results'),
+                takeUntil(this.destroy$)
             );
     }
 

@@ -5,9 +5,9 @@
 
 <div class="my-2" *ngIf="!isSearching">
     <span class="c-white fs-6 page-title">Movies language:</span>
-    <img class="flags mx-2" (click)="setLanguage('en-US')" src="assets/images/estados-unidos.png">
-    <img class="flags mx-2" (click)="setLanguage('pt-BR')" src="assets/images/brasil.png">
-    <img class="flags mx-2" (click)="setLanguage('es-ES')" src="assets/images/espanha.png">
+    <img class="flags mx-2" (click)="setLanguage('en-US')" [ngClass]="checkLanguage('en-US')" src="assets/images/estados-unidos.png">
+    <img class="flags mx-2" (click)="setLanguage('pt-BR')" [ngClass]="checkLanguage('pt-BR')" src="assets/images/brasil.png">
+    <img class="flags mx-2" (click)="setLanguage('es-ES')" [ngClass]="checkLanguage('es-ES')" src="assets/images/espanha.png">
 </div>
 
 <div class="col-xl-7 col-md-10 py-3">
@@ -29,4 +29,4 @@
     </mat-button-toggle>
 </mat-button-toggle-group>
 
-<movie-list [movies]="movies" (nextPage)="nextPage()"></movie-list>
+<router-outlet></router-outlet>

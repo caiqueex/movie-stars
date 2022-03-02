@@ -48,6 +48,10 @@ input[type=search] {
     width: 20px;
 }
 
+.flag-selected {
+    width: 30px;
+}
+
 ::ng-deep {
     .mat-form-field-type-mat-select .mat-form-field-label, .mat-select-value {
         color: white;
