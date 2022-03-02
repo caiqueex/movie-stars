@@ -7,7 +7,8 @@
     <div *ngFor="let movie of movies" class="item m-sm-3 m-md-3 ms-0 row col-12 my-2"
         [routerLink]="['/movie', movie.id, 'details']">
         <div class="movie-bg-container col-2">
-            <img class="w-100 img-ctm" [src]="movie.poster_path">
+            <img class="w-100 img-ctm" errorImage="./assets/images/no-image.png"
+                defaultImage="./assets/images/no-image.png" [lazyLoad]="movie.poster_path">
         </div>
 
         <div class="rating-container mt-sm-2 p-0 p-abs-container">

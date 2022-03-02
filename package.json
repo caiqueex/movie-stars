@@ -23,6 +23,7 @@
     "@ngx-loading-bar/core": "^6.0.2",
     "@ngx-loading-bar/http-client": "^6.0.2",
     "@ngx-loading-bar/router": "^6.0.2",
+    "ng-lazyload-image": "^9.1.2",
     "ngx-infinite-scroll": "^10.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
