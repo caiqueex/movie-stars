@@ -1,10 +1,14 @@
-<div class="p-5 row col-12 cover-img h-50 m-0" *ngIf="movieDetails"
-    [style.background-image]="'url(' + movieDetails.backdrop_path + ')'">
+<div class="movie-bg-container col-12 row w-100 h-100 m-0 p-0">
+    <div class="p-5 row col-12 cover-img h-50 m-0 img-container" *ngIf="movieDetails"
+        errorImage="./assets/images/no-image.png" defaultImage="./assets/images/no-image.png"
+        [lazyLoad]="movieDetails.backdrop_path">
+    </div>
 </div>
 
 <div class="p-5 row col-12 position-absolute movie-content" *ngIf="movieDetails">
-    <div class="col-md-3 col-12 justify-content-center align-items-center d-flex">
-        <img class="w-75 img-ctm" [src]="movieDetails.poster_path">
+    <div class="col-md-3 col-12 justify-content-center align-items-center d-flex movie-bg-container">
+        <img class="w-75 img-ctm" errorImage="./assets/images/no-image.png" defaultImage="./assets/images/no-image.png"
+            [lazyLoad]="movieDetails.poster_path">
     </div>
     <div class="col-md-9 col-12 justify-content-center align-self-center mt-lg-0 mt-4">
         <span class="page-title display-6 c-white row">{{movieDetails.title}}</span>

@@ -5,8 +5,7 @@ import { MovieDetailsComponent } from './movie-details.component';
 import { MovieDetailsService } from './movie-details.service';
 import { MovieDetailsRoutingModule } from './movie-details-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
-
-
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [
@@ -15,7 +14,8 @@ import { MatDialogModule } from '@angular/material/dialog';
   imports: [
     CommonModule,
     MovieDetailsRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    LazyLoadImageModule
   ],
   providers: [
     MovieDetailsService,

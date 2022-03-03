@@ -40,6 +40,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'movie',
+    redirectTo: '/movie/most-popular',
+    pathMatch: 'full'
+  },
+  {
     path: '',
     component: MovieDashboardComponent,
     children: [
