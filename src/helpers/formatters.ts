@@ -27,7 +27,6 @@ export const formatMovies = (movies) => {
             movie.backdrop_path = movie.backdrop_path
                 ? `${imgUrl}${movie.backdrop_path}`
                 : './assets/images/no-image.png';
-            movie.overview = movie.overview.substr(0, 100) + '...';
             return movie;
         }
     });
@@ -42,7 +41,6 @@ export const formatMovieDetails = (movie, backgrop?: boolean) => {
         movie.backdrop_path = movie.backdrop_path
             ? `${backgrop ? 'https://image.tmdb.org/t/p/original' : imgUrl}${movie.backdrop_path}`
             : './assets/images/no-image.png';
-        movie.overview = movie.overview.substr(0, 100) + '...';
         return movie;
     }
 

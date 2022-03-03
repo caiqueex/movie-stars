@@ -13,7 +13,7 @@
 <div class="col-xl-7 col-md-10 py-3">
     <div class="input-group rounded b-gray">
         <i class="ms-2 fas fa-search d-flex align-self-center me-2 c-gray"></i>
-        <input type="search" class="form-control rounded" placeholder="Start typing to search..." #movieSearchInput
+        <input type="search" class="form-control rounded" placeholder="Start typing to search..." [formControl]="searchControl"
             (search)="clearSearchInput($event)" (keyup)="clearSearchInput($event)" />
         <button type="button" class="btn btn-primary" (click)="search()">Search</button>
     </div>

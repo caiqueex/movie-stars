@@ -11,9 +11,9 @@
         <span class="c-white row fs-10">{{movieDetails.release_date | date: 'dd/MM/YYYY'}} (PT) •
             {{formatGenresByComma(movieDetails.genres)}} • {{formatRuntime(movieDetails.runtime)}}</span>
 
-        <div (click)="openDialog()" *ngIf="movieVideos && movieVideos.length" class="mt-2">
+        <div (click)="openDialog()" *ngIf="movieVideos && movieVideos.length" class="mt-2 trailer-container">
             <i class="fas fa-play c-white row"></i>
-            <span class="c-white mt-2 ml-2 ml-20px">Trailer</span>
+            <span class="c-white mt-2 ml-2 ml-20px ">Trailer</span>
         </div>
 
         <span class="c-white row mt-lg-5 pt-lg-5 mt-3 lt-3">{{movieDetails.overview}}</span>

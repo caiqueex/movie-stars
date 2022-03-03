@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, of, Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, of, pipe, Subject, Subscription, takeUntil } from 'rxjs';
 import { Movie } from 'src/model/movie';
 import { MovieDashboardService } from './movie-dashboard.service';
 import { formatMovies } from 'src/helpers/formatters'
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'movie-dashboard',
@@ -14,7 +15,8 @@ import { formatMovies } from 'src/helpers/formatters'
 export class MovieDashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild('widgetsContent') widgetsContent: ElementRef;
-  @ViewChild('movieSearchInput', { static: true }) movieSearchInput: ElementRef;
+
+  public searchControl: FormControl = new FormControl();
 
   private subsc: Subscription = new Subscription();
   private destroy$ = new Subject<void>();
@@ -49,31 +51,28 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private movieDashboardService: MovieDashboardService,
   ) {
-    this.isSearching = !!this.activatedRoute.snapshot.queryParams['query']
   }
 
   ngOnInit(): void {
-    // to preserve query term and get new search when we visit the platform directly accessing the route 'movie/search[...]'
-    this.activatedRoute.paramMap.subscribe(_ => {
-      if (this.activatedRoute.snapshot.queryParams['query']) {
-        this.getSearch(this.activatedRoute.snapshot.queryParams['query'])
-          .subscribe(_ => {
-            this.movieSearchInput.nativeElement.value = this.activatedRoute.snapshot.queryParams['query'];
-          });
-      }
-    });
 
-    fromEvent(this.movieSearchInput.nativeElement, 'keyup').pipe(
-      map((event: any) => {
-        return event.target.value;
-      }),
-      filter(res => res.length > 2),
-      debounceTime(250), //The search input should not trigger any call when the same word is written within the interval of 250 milliseconds
-      distinctUntilChanged()
-    ).subscribe((text: string) => {
-      this.isSearching = true;
-      this.router.navigate(['/movie/search'], { queryParams: { query: text }});
-    });
+    this.searchControl.valueChanges
+      .pipe(
+        filter(res => res.length > 2),
+        debounceTime(250), //The search input should not trigger any call when the same word is written within the interval of 250 milliseconds
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(query => {
+        this.isSearching = true;
+        this.router.navigate(['/movie/search'], { queryParams: { query } });
+      });
+
+    this.activatedRoute.queryParams.subscribe((q: any) => {
+      if (q.query) {
+          this.isSearching = true;
+          this.searchControl.setValue(q.query);
+      } else this.isSearching = false;
+    })
 
   }
 
@@ -98,10 +97,10 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
   }
 
   public search() {
-    if (this.movieSearchInput.nativeElement.value) {
-      this.router.navigate(['/movie/search'], { queryParams: { query: this.movieSearchInput.nativeElement.value }, preserveFragment: true });
+    if (this.searchControl.value) {
+      this.router.navigate(['/movie/search'], { queryParams: { query: this.searchControl.value }, preserveFragment: true });
 
-      this.getSearch(this.movieSearchInput.nativeElement.value).subscribe((res) => {
+      this.getSearch(this.searchControl.value).subscribe((res) => {
         this.movies = formatMovies(res);
       }, (err) => {
         this.isSearching = false;
@@ -119,7 +118,7 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
 
   public checkLanguage(flagReceived) {
     let lang = localStorage.getItem('language');
-    return lang === flagReceived ? 'flag-selected' : ''; 
+    return lang === flagReceived ? 'flag-selected' : '';
   }
 
   scrollLeft() {

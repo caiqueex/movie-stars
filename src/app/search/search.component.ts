@@ -4,6 +4,7 @@ import { map, Observable, of, pluck, Subject, takeUntil } from 'rxjs';
 import { formatMovies } from 'src/helpers/formatters';
 import { Movie } from 'src/model/movie';
 import { MovieDashboardService } from '../movie-dashboard/movie-dashboard.service';
+import {  ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'search',
@@ -18,6 +19,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   constructor(
     private movieDashboardService: MovieDashboardService,
     private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +30,10 @@ export class SearchComponent implements OnInit, OnDestroy {
             pluck('results'),
             map((mv: Movie[]) => formatMovies(mv)),
             takeUntil(this.destroy$),
-          ).subscribe((res) => this.movies = res);
+          ).subscribe((res) => {
+            this.movies = res;
+            this.cdr.detectChanges();
+          });
       });
   }
 

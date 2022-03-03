@@ -4,7 +4,8 @@ import { MovieDashboardComponent } from './movie-dashboard.component';
 import { MovieDashboardRoutingModule } from './movie-dashboard-routing.module';
 import { MovieDashboardService } from './movie-dashboard.service';
 import { HttpClientModule } from '@angular/common/http';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     CommonModule,
     MovieDashboardRoutingModule,
     MatButtonToggleModule,
+    ReactiveFormsModule
   ],
   providers: [
     MovieDashboardService,
