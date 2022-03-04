@@ -1,7 +1,7 @@
 # Movie Stars :desktop_computer: :star:
 
 ## About it
-This project was made by <a href="https://github.com/caiqueex">Caique Lourenço</a> with :heart: to <a href="https://www.beatstars.com">BeatsStars</a> :star:
+This project was made by <a href="https://github.com/caiqueex">Caique Lourenço</a> with :heart: to <a href="https://www.beatstars.com">BeatStars</a> :star:
 
 <details>
       <summary><b>:rocket:&nbsp;&nbsp;How to run</b></summary>
