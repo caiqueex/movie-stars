@@ -30,18 +30,20 @@ input[type=search] {
 }
 
 ::ng-deep .gp-btn .mat-button-toggle-label-content {
-    line-height: 25px !important; 
+    line-height: 25px !important;
 }
 
 .custom-slider-btn {
     display: flex;
-    overflow: scroll;    
+    overflow: scroll;
     scroll-behavior: smooth;
 }
 
 .mat-button-toggle-group::-webkit-scrollbar {
-    width: 0px;/* remove scrollbar space */
-    background: transparent;/* make scrollbar invisible */
+    width: 0px;
+    /* remove scrollbar space */
+    background: transparent;
+    /* make scrollbar invisible */
 }
 
 .flags {
@@ -53,10 +55,48 @@ input[type=search] {
 }
 
 ::ng-deep {
-    .mat-form-field-type-mat-select .mat-form-field-label, .mat-select-value {
+    .mat-form-field-type-mat-select .mat-form-field-label,
+    .mat-select-value {
         color: white;
-      }
-      .mat-form-field-type-mat-select .mat-form-field-flex {
-          background-color: #262626;
-      }
+    }
+    .mat-form-field-type-mat-select .mat-form-field-flex {
+        background-color: #262626;
+    }
+}
+
+.bgVideo {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.content-home {
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+}
+
+.remove-gradient {
+    background-color: black !important;
+}
+
+.search-divider {
+    width: 100vw;
+    height: 1px;
+    background: #262626;
+    position: absolute;
+    left: 0;
+}
+
+ ::ng-deep .ngx-spinner {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }

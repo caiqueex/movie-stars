@@ -1,32 +1,45 @@
-<div class="row col-12" *ngIf="!isSearching">
-    <span class="page-title display-2 lh-1 c-white">Find movie & more.</span>
-    <span class="page-title display-2 lh-1 c-white">Explore now.</span>
-</div>
+<video autoplay #video muted loop class="bgVideo" (canplay)="video.play()" (loadedmetadata)="video.muted = true">
+    <source src="assets/videos/video.mp4" type="video/mp4">
+</video>
 
-<div class="my-2" *ngIf="!isSearching">
-    <span class="c-white fs-6 page-title">Movies language:</span>
-    <img class="flags mx-2" (click)="setLanguage('en-US')" [ngClass]="checkLanguage('en-US')" src="assets/images/estados-unidos.png">
-    <img class="flags mx-2" (click)="setLanguage('pt-BR')" [ngClass]="checkLanguage('pt-BR')" src="assets/images/brasil.png">
-    <img class="flags mx-2" (click)="setLanguage('es-ES')" [ngClass]="checkLanguage('es-ES')" src="assets/images/espanha.png">
-</div>
+<div class="content-home p-3 custom-mg">
 
-<div class="col-xl-7 col-md-10 py-3">
-    <div class="input-group rounded b-gray">
-        <i class="ms-2 fas fa-search d-flex align-self-center me-2 c-gray"></i>
-        <input type="search" class="form-control rounded" placeholder="Start typing to search..." [formControl]="searchControl"
-            (search)="clearSearchInput($event)" (keyup)="clearSearchInput($event)" />
-        <button type="button" class="btn btn-primary" (click)="search()">Search</button>
+    <div class="row col-12" *ngIf="!isSearching">
+        <span class="page-title display-2 lh-1 c-white">Find movie & more.</span>
+        <span class="page-title display-2 lh-1 c-white">Explore now.</span>
     </div>
+
+    <div class="my-2" *ngIf="!isSearching">
+        <span class="c-white fs-6 page-title">Movies language:</span>
+        <img class="flags mx-2" (click)="setLanguage('en-US')" [ngClass]="checkLanguage('en-US')"
+            src="assets/images/estados-unidos.png">
+        <img class="flags mx-2" (click)="setLanguage('pt-BR')" [ngClass]="checkLanguage('pt-BR')"
+            src="assets/images/brasil.png">
+        <img class="flags mx-2" (click)="setLanguage('es-ES')" [ngClass]="checkLanguage('es-ES')"
+            src="assets/images/espanha.png">
+    </div>
+
+    <div class="col-xl-7 col-md-10 py-3 pb-5">
+        <div class="input-group rounded b-gray">
+            <i class="ms-2 fas fa-search d-flex align-self-center me-2 c-gray"></i>
+            <input type="search" class="form-control rounded" placeholder="Start typing to search..."
+                [formControl]="searchControl" (search)="clearSearchInput($event)" (keyup)="clearSearchInput($event)" />
+            <button type="button" class="btn btn-primary" (click)="search()" *ngIf="!isSearching">Search</button>
+        </div>
+    </div>
+
+    <div class="search-divider" *ngIf="isSearching"></div>
+
+    <div class="row col-12 py-3" [ngClass]="{'pt-4' : isSearching}">
+        <span class="page-title display-6 c-white">{{isSearching ? 'Search results' : 'Explore movies'}}</span>
+    </div>
+
+    <mat-button-toggle-group #widgetsContent class="gp-btn custom-slider-btn" *ngIf="!isSearching">
+        <mat-button-toggle class="me-2" *ngFor="let tab of tabs; let i = index" [routerLink]="tab.path" routerLinkActive
+            #rla="routerLinkActive" [ngClass]="rla.isActive ? 'b-blue c-white' : 'b-gray c-gray'">{{tab.label}}
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <router-outlet></router-outlet>
+
 </div>
-
-<div class="row col-12 py-3">
-    <span class="page-title display-6 c-white">{{isSearching ? 'Search results' : 'Explore movies'}}</span>
-</div>
-
-<mat-button-toggle-group #widgetsContent class="gp-btn custom-slider-btn" *ngIf="!isSearching">
-    <mat-button-toggle class="me-2" *ngFor="let tab of tabs; let i = index" [routerLink]="tab.path" routerLinkActive
-        #rla="routerLinkActive" [ngClass]="rla.isActive ? 'b-blue c-white' : 'b-gray c-gray'">{{tab.label}}
-    </mat-button-toggle>
-</mat-button-toggle-group>
-
-<router-outlet></router-outlet>

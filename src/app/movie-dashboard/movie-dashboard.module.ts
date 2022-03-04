@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MovieDashboardComponent } from './movie-dashboard.component';
 import { MovieDashboardRoutingModule } from './movie-dashboard-routing.module';
-import { MovieDashboardService } from './movie-dashboard.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MovieStarsService } from 'src/services/movie-stars.service';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   providers: [
-    MovieDashboardService,
+    MovieStarsService,
     HttpClientModule,
   ],
 })

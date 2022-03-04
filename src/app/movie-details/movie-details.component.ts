@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieDetail } from 'src/model/movieDetail';
-import { MovieDetailsService } from './movie-details.service';
 import { formatMovieDetails, formatGenres, toHoursAndMinutes } from 'src/helpers/formatters'
 import { MovieVideo } from 'src/model/movieVideo';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { TrailerModalComponent } from '../trailer-modal/trailer-modal.component';
+import { MovieStarsService } from 'src/services/movie-stars.service';
 
 @Component({
   selector: 'movie-details',
@@ -20,15 +20,15 @@ export class MovieDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private movieDetailsService: MovieDetailsService,
+    private movieStarsService: MovieStarsService,
     public dialog: MatDialog,
     public domSanitizer: DomSanitizer,
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      if(params['id']) {
-        this.movieDetailsService.getMovieDetails(params['id'])
+      if (params['id']) {
+        this.movieStarsService.getMovieDetails(params['id'])
           .subscribe((movie: MovieDetail) => {
             this.movieDetails = formatMovieDetails(movie, true);
 
@@ -40,7 +40,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   private getMovieYTVideo(id: number): void {
-    this.movieDetailsService.getMovieVideo(id).subscribe((res: MovieVideo[]) => {
+    this.movieStarsService.getMovieVideo(id).subscribe((res: MovieVideo[]) => {
       this.movieVideos = res.map(video => {
         video.site = `https://www.youtube.com/watch?v=${video.key}`;
         return video;

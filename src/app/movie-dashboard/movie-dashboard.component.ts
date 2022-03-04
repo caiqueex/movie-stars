@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, of, pipe, Subject, Subscription, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, Observable, of, Subject, Subscription, takeUntil } from 'rxjs';
 import { Movie } from 'src/model/movie';
-import { MovieDashboardService } from './movie-dashboard.service';
 import { formatMovies } from 'src/helpers/formatters'
 import { FormControl } from '@angular/forms';
+import { MovieStarsService } from 'src/services/movie-stars.service';
 
 @Component({
   selector: 'movie-dashboard',
@@ -49,7 +49,7 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private movieDashboardService: MovieDashboardService,
+    private movieStarsService: MovieStarsService,
   ) {
   }
 
@@ -69,8 +69,8 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
 
     this.activatedRoute.queryParams.subscribe((q: any) => {
       if (q.query) {
-          this.isSearching = true;
-          this.searchControl.setValue(q.query);
+        this.isSearching = true;
+        this.searchControl.setValue(q.query);
       } else this.isSearching = false;
     })
 
@@ -86,7 +86,7 @@ export class MovieDashboardComponent implements OnInit, OnDestroy {
     if (term === '') {
       return of([]);
     }
-    return this.movieDashboardService.searchMovie(term);
+    return this.movieStarsService.searchMovie(term);
   }
 
   public clearSearchInput(event: any) {

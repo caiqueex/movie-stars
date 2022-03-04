@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable, of, pluck, Subject, takeUntil } from 'rxjs';
 import { formatMovies } from 'src/helpers/formatters';
 import { Movie } from 'src/model/movie';
-import { MovieDashboardService } from '../movie-dashboard/movie-dashboard.service';
-import {  ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
+import { MovieStarsService } from 'src/services/movie-stars.service';
 
 @Component({
   selector: 'search',
@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private movieDashboardService: MovieDashboardService,
+    private movieStarsService: MovieStarsService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) { }
@@ -46,11 +46,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     if (term === '') {
       return of([]);
     }
-    return this.movieDashboardService.searchMovie(term);
+    return this.movieStarsService.searchMovie(term);
   }
 
   public nextPage() {
-    this.movieDashboardService.nextPage().subscribe((m: Movie[]) => {
+    this.movieStarsService.nextPage().subscribe((m: Movie[]) => {
       this.movies.push(...formatMovies(m));
     });
   }

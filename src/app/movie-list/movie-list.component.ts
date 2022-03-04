@@ -14,7 +14,7 @@ export class MovieListComponent {
   @Output()
   nextPage = new EventEmitter<boolean>();
 
-  onScroll () {
+  onScroll() {
     this.nextPage.emit(true);
   }
 

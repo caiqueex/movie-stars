@@ -18,11 +18,17 @@
     cursor: pointer;
 }
 
-.movie-bg-container img,.img-container {
+.movie-bg {
+    background-color: black;
+}
+
+.movie-bg-container img,
+.img-container {
     transition: opacity 2s;
     opacity: 0;
 }
 
-.movie-bg-container img,.img-container.ng-lazyloaded {
+.movie-bg-container img,
+.img-container.ng-lazyloaded {
     opacity: 1 !important;
 }

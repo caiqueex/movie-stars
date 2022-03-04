@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { map, pluck, Subject, takeUntil } from 'rxjs';
 import { formatMovies } from 'src/helpers/formatters';
 import { Movie } from 'src/model/movie';
-import { MovieDashboardService } from '../movie-dashboard/movie-dashboard.service';
+import { MovieStarsService } from 'src/services/movie-stars.service';
 
 @Component({
   selector: 'app-top-rated',
@@ -15,18 +15,21 @@ export class TopRatedComponent implements OnInit {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private movieDashboardService: MovieDashboardService,
+    private movieStarsService: MovieStarsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
 
-    this.movieDashboardService.getMovie('top_rated')
+    this.movieStarsService.getMovie('top_rated')
       .pipe(
         pluck('results'),
         map((mv: Movie[]) => formatMovies(mv)),
         takeUntil(this.destroy$),
-      ).subscribe((res) => this.movies = res);
-
+      ).subscribe((res) => {
+        this.movies = res;
+        this.cdr.detectChanges();
+      });
   }
 
   ngOnDestroy(): void {
@@ -35,7 +38,7 @@ export class TopRatedComponent implements OnInit {
   }
 
   public nextPage() {
-    this.movieDashboardService.nextPage().subscribe((m: Movie[]) => {
+    this.movieStarsService.nextPage().subscribe((m: Movie[]) => {
       this.movies.push(...formatMovies(m));
     });
   }

@@ -1,27 +1,11 @@
-
 @use '@angular/material' as mat;
 @include mat.core();
-
 $movie-stars-primary: mat.define-palette(mat.$indigo-palette);
 $movie-stars-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
 $movie-stars-warn: mat.define-palette(mat.$red-palette);
-
-$movie-stars-theme: mat.define-light-theme((
-  color: (
-    primary: $movie-stars-primary,
-    accent: $movie-stars-accent,
-    warn: $movie-stars-warn,
-  )
-));
-
+$movie-stars-theme: mat.define-light-theme(( color: ( primary: $movie-stars-primary, accent: $movie-stars-accent, warn: $movie-stars-warn, )));
 @include mat.all-component-themes($movie-stars-theme);
-
-$theme-colors: (
-  "primary": #005FF8,
-  "danger": #ff4136
-);
-
+$theme-colors: ( "primary": #005FF8, "danger": #ff4136);
 @font-face {
     font-family: "Bebas Neue";
     src: local("Bebas Neue"), url(./assets/fonts/BebasNeue-Regular.ttf) format("truetype");
@@ -32,8 +16,8 @@ $theme-colors: (
     src: local("Poppins"), url(./assets/fonts/Poppins-Regular.ttf) format("truetype");
 }
 
-html, body {
-    background-color: #0A0A09;
+html,
+body {
     font-family: "Poppins", Arial, Helvetica, sans-serif;
     height: 100%;
 }
@@ -42,12 +26,50 @@ html, body {
     font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
-@media (min-width:320px) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ }
-@media (min-width:480px) { /* smartphones, Android phones, landscape iPhone */ }
-@media (min-width:600px) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ }
-@media (min-width:801px) { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
-@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
-@media (min-width:1440px) { /* hi-res laptops and desktops */ }
+body::after {
+    position: fixed;
+    content: "";
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7460027956495099) 65%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+@media (min-width:320px) {
+    .custom-mg {
+        padding-left: 16px !important;
+        padding-top: 40px !important;
+        padding-right: 16px !important;
+    }
+}
+
+@media (min-width:768px) {
+    .custom-mg {
+        padding-left: 24px !important;
+        padding-top: 40px !important;
+        padding-right: 24px !important;
+    }
+}
+
+@media (min-width:1440px) {
+    .custom-mg {
+        padding-left: 156px !important;
+        padding-top: 80px !important;
+        padding-right: 156px !important;
+    }
+}
+
+[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    background: url('assets/images/clear-filter.svg') no-repeat 50% 50%; //same icon used at figma
+}
 
 .page-title {
     font-family: "Bebas Neue", Arial, Helvetica, sans-serif;
@@ -55,7 +77,7 @@ html, body {
 
 .w-30-c {
     width: 300px;
-} 
+}
 
 .c-white {
     color: white;
@@ -100,4 +122,4 @@ html, body {
 
 .yt-modal .mat-dialog-container {
     background-color: #262626 !important;
-  }
+}

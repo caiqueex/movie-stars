@@ -5,6 +5,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RouterModule } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     InfiniteScrollModule,
     RouterModule,
     MatTooltipModule,
-    LazyLoadImageModule
+    LazyLoadImageModule,
+    LoadingBarHttpClientModule,
+    LoadingBarRouterModule,
+    LoadingBarModule,
   ],
   exports: [MovieListComponent]
 })

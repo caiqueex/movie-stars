@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MostPopularRoutingModule } from './most-popular-routing.module';
 import { MostPopularComponent } from './most-popular.component';
 import { MovieListModule } from '../movie-list/movie-list.module';
-import { MovieDashboardService } from '../movie-dashboard/movie-dashboard.service';
+import { MovieStarsService } from 'src/services/movie-stars.service';
 
 @NgModule({
   declarations: [
@@ -14,6 +14,8 @@ import { MovieDashboardService } from '../movie-dashboard/movie-dashboard.servic
     MostPopularRoutingModule,
     MovieListModule
   ],
-  providers: [MovieDashboardService]
+  providers: [
+    MovieStarsService
+  ]
 })
 export class MostPopularModule { }

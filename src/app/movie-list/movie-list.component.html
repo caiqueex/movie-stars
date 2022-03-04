@@ -1,9 +1,5 @@
-<span hidden>
-    {{movies.length}}
-</span>
-
 <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
-    class="movies-container mt-3" *ngIf="movies && movies.length; else emptyList">
+    class="movies-container mt-3 mb-custom" *ngIf="movies && movies.length; else emptyList">
     <div *ngFor="let movie of movies" class="item m-sm-3 m-md-3 ms-0 row col-12 my-2"
         [routerLink]="['/movie', movie.id, 'details']">
         <div class="movie-bg-container col-2">
@@ -21,10 +17,15 @@
             <span class="row ms-0 c-gray fs-8">{{movie.release_date | date: 'dd MMM yyyy'}}</span>
         </div>
     </div>
+
+
+    <ngx-loading-bar [fixed]="false" [diameter]="'50px'" [includeBar]="false" style="  margin-left: auto;
+    margin-right: auto;"></ngx-loading-bar>
+
 </div>
 
 <ng-template #emptyList>
-    <div class="col d-flex align-items-center justify-content-center">
+    <div class="col d-flex align-items-center justify-content-center vh-100">
         <img class="w-30-c" src="./assets/images/no-results-found.png">
     </div>
 </ng-template>
